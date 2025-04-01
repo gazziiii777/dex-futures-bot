@@ -1,1 +1,1 @@
-print("dfgdfggfdg")
+print("даунич ччччч")
