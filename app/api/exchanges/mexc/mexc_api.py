@@ -13,5 +13,5 @@ class MexcApi:
         self.futures_client = futures.HTTP(
             api_key=self.api_key, api_secret=self.secret_key)
 
-    def get_spot_client(self):
-        return self.futures_client
+    def get_detail(self):
+        return self.futures_client.detail()
