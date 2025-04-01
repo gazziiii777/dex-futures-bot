@@ -44,8 +44,9 @@ class CoinMarketCapApi:
                     response.raise_for_status()
                     return await response.json()
         except aiohttp.ClientError as e:
-            print(f"Ошибка при запросе к API: {e}")
+            print(f"Ошибка при запросе к API CoinMarketCap: {e}")
             return None
         except Exception as e:
-            print(f"Неожиданная ошибка: {e}")
+            print(
+                f"Неожиданная ошибка CoinMarketCapApi (get_cryptocurrency_info): {e}")
             return None
