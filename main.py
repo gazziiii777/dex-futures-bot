@@ -21,6 +21,9 @@ dp = Dispatcher()
 async def on_startup():
     """Функция, которая выполняется при запуске бота."""
     logging.info("Бот запущен.")
+    a = MexcApi()
+    b = a.get_currency_info()
+    print(b)
 
 
 async def on_shutdown():
