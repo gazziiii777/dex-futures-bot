@@ -1,1 +1,1 @@
-print("ВЫЕБУ ВАНЮ В РОТИК")
+print("dfgdfggfdg")
