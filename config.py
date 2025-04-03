@@ -1,4 +1,5 @@
 COINMARKETCAP_BASE_URL = "https://pro-api.coinmarketcap.com"
-UNISWAP = "https://app.uniswap.org"
-MATCHA = "https://matcha.xyz/tokens"
+UNISWAP_BASE_URL = "https://app.uniswap.org"
+MATCHA_BASE_URL = "https://matcha.xyz/tokens"
 DEXSCREENER_BASE_URL = "https://api.dexscreener.com"
+BINGX_BASE_URL = "https://open-api.bingx.com"
