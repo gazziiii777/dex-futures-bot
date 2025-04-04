@@ -1,15 +1,13 @@
 import os
 
-from dotenv import load_dotenv
 from pymexc import futures, spot
-
-load_dotenv()
+from core.config import settings
 
 
 class MexcApi:
     def __init__(self):
-        self.api_key = os.getenv('MEXC_API_KEY')
-        self.secret_key = os.getenv('MEXC_SECRET_KEY')
+        self.api_key = settings.MEXC_API_KEY
+        self.secret_key = settings.MEXC_SECRET_KEY
         self.futures_client = futures.HTTP(
             api_key=self.api_key, api_secret=self.secret_key)
         self.spot_client = spot.HTTP(

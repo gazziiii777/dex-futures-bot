@@ -2,18 +2,17 @@ import time
 import aiohttp
 import hmac
 import os
-from dotenv import load_dotenv
+
 from hashlib import sha256
 from config import BINGX_BASE_URL
-
-load_dotenv()
+from core.config import settings
 
 
 class BingXApi:
     def __init__(self):
         # Обратите внимание: у вас MEXC вместо BINGX
-        self.api_key = os.getenv('BINGX_API_KEY')
-        self.secret_key = os.getenv('BINGX_SECRET_KEY')  # Тут тоже MEXC
+        self.api_key = settings.BINGX_API_KEY
+        self.secret_key = settings.BINGX_SECRET_KEY  # Тут тоже MEXC
         self.base_url = BINGX_BASE_URL
 
     async def demo(self):

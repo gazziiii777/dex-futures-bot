@@ -1,9 +1,6 @@
 import aiohttp
 
-from dotenv import load_dotenv
 from config import DEXSCREENER_BASE_URL
-
-load_dotenv()
 
 
 class DEXApi:
