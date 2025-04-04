@@ -9,6 +9,15 @@ class MEXC(Base):
     slug: str = Mapped[str]
     chain: str = Mapped[str]
     token_address: str = Mapped[str]
-    token_address_clear: str = Mapped[str]
+    logo: str = Mapped[str]
+    signal: bool = Mapped[bool]
+
+
+class BINGX(Base):
+    name: str = Mapped[str]
+    sumbol: str = Mapped[str]
+    slug: str = Mapped[str]
+    chain: str = Mapped[str]
+    token_address: str = Mapped[str]
     logo: str = Mapped[str]
     signal: bool = Mapped[bool]

@@ -20,7 +20,7 @@ async def on_startup():
     """Функция, которая выполняется при запуске бота."""
     logging.info("Бот запущен.")
     a = CoinMarketCapApi()
-    b = await a.get_cryptocurrency_info("EDGE")
+    b = await a.get_cryptocurrency_info("SEED")
     print(b)
 
 
