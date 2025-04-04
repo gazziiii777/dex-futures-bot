@@ -4,6 +4,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
 class MEXC(Base):
+    __tablename__ = "mexc"
+
     name: str = Mapped[str]
     sumbol: str = Mapped[str]
     slug: str = Mapped[str]

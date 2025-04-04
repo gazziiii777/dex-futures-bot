@@ -9,7 +9,6 @@ from core.database_sqlalchemy import db_helper
 from .services import test
 
 
-
 router = APIRouter(tags=['MEXC'])
 
 

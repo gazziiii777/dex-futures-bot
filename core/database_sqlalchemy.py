@@ -7,11 +7,10 @@ from asyncio import current_task
 from contextlib import asynccontextmanager
 
 
-
 class DataSperm:
     def __init__(self):
-        self.engine=create_async_engine(
-            url=settings.DB_URL,
+        self.engine = create_async_engine(
+            url=settings.DATABASE_URL_asyncpg,
             pool_size=100,
             echo=True,
             max_overflow=50)
@@ -29,14 +28,12 @@ class DataSperm:
             scopefunc=current_task
         )
         return session
-    
 
-    async def session_dependency(self): 
+    async def session_dependency(self):
         async with self.session_factory() as session:
             yield session
             await session.close()
 
-    
     async def scoped_session_dependency(self):
         session = self.get_scoped_session()
         try:
@@ -44,13 +41,12 @@ class DataSperm:
         finally:
             await session.close()
 
-    
     @asynccontextmanager
-    async def scoped_session_dependency_context(self) -> AsyncSession: # type: ignore
+    # type: ignore
+    async def scoped_session_dependency_context(self):
         session = self.get_scoped_session()
         yield session
         await session.close()
-
 
 
 db_helper = DataSperm()
