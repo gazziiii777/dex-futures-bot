@@ -13,20 +13,3 @@ router = APIRouter(tags=['MEXC'])
 @router.get("/get")
 async def get_count():
     return {"return": "kox"}
-
-
-
-app = FastAPI(
-    title='YG', docs_url="/docs"
-)
-
-app.include_router(router, prefix="/api/v1")
-
-
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
