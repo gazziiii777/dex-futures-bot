@@ -4,6 +4,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from app.services.oracles.coinmarketcap_api import CoinMarketCapApi
+from app.services.cex.mexc_api import MexcApi
 from aiogram.client.bot import DefaultBotProperties
 from app.bot.handlers import router
 from core.config import settings
@@ -19,9 +20,13 @@ dp = Dispatcher()
 async def on_startup():
     """Функция, которая выполняется при запуске бота."""
     logging.info("Бот запущен.")
-    a = CoinMarketCapApi()
-    b = await a.get_cryptocurrency_info("TAT")
-    print(b)
+    # a = CoinMarketCapApi()
+    # b = await a.get_cryptocurrency_info("TAT")
+    # print(b)
+    a = MexcApi()
+    b = await a.get_all_futures_coin()
+    for i in b:
+        print(i)
 
 
 async def on_shutdown():

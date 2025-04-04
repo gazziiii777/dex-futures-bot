@@ -2,6 +2,7 @@ import os
 
 from pymexc import futures, spot
 from core.config import settings
+import app.utils.mexc_utils as utils
 
 
 class MexcApi:
@@ -13,8 +14,10 @@ class MexcApi:
         self.spot_client = spot.HTTP(
             api_key=self.api_key, api_secret=self.secret_key)
 
-    def get_detail(self):
-        return self.futures_client.detail()
+    async def get_all_futures_coin(self) -> dict:
+        detale = self.futures_client.detail()
+        available_coins = await utils.all_futures_coins(detale.get('data'))
+        return available_coins
 
     def get_currency_info(self):
         return self.spot_client.get_currency_info()
