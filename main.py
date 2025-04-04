@@ -3,7 +3,7 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
-from app.services.cex.mexc_api import MexcApi
+from app.services.oracles.coinmarketcap_api import CoinMarketCapApi
 from aiogram.client.bot import DefaultBotProperties
 from app.bot.handlers import router
 from core.config import settings
@@ -19,8 +19,8 @@ dp = Dispatcher()
 async def on_startup():
     """Функция, которая выполняется при запуске бота."""
     logging.info("Бот запущен.")
-    a = MexcApi()
-    b = a.get_currency_info()
+    a = CoinMarketCapApi()
+    b = await a.get_cryptocurrency_info("EDGE")
     print(b)
 
 

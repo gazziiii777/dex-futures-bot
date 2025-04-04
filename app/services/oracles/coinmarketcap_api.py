@@ -1,16 +1,13 @@
 import aiohttp
 import asyncio
-import os
 
-from dotenv import load_dotenv
+from core.config import settings
 from config import COINMARKETCAP_BASE_URL
-
-load_dotenv()
 
 
 class CoinMarketCapApi:
     def __init__(self):
-        self.api_key = os.getenv('COINMARKETCAP_API_KEY')
+        self.api_key = settings.COINMARKETCAP_API_KEY
         self.headers = {
             'Accepts': 'application/json',
             'X-CMC_PRO_API_KEY': self.api_key,
