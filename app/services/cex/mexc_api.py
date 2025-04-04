@@ -15,8 +15,8 @@ class MexcApi:
             api_key=self.api_key, api_secret=self.secret_key)
 
     async def get_all_futures_coin(self) -> dict:
-        detale = self.futures_client.detail()
-        available_coins = await utils.all_futures_coins(detale.get('data'))
+        detail = self.futures_client.detail()
+        available_coins = await utils.all_futures_coins(detail.get('data'))
         return available_coins
 
     def get_currency_info(self):

@@ -2,6 +2,8 @@ import time
 import aiohttp
 import hmac
 import os
+import app.utils.bingx_utils as utils
+
 
 from hashlib import sha256
 from config import BINGX_BASE_URL
@@ -15,13 +17,15 @@ class BingXApi:
         self.secret_key = settings.BINGX_SECRET_KEY  # Тут тоже MEXC
         self.base_url = BINGX_BASE_URL
 
-    async def demo(self):
+    async def get_all_futures_coin(self):
         payload = {}
         path = '/openApi/swap/v2/quote/contracts'
         method = "GET"
         params_map = {}
         params_str = self._parse_params(params_map)
-        return await self._send_request(method, path, params_str, payload)
+        detail = await self._send_request(method, path, params_str, payload)
+        available_coins = await utils.all_futures_coins(detail.get('data'))
+        return available_coins
 
     def _get_sign(self, payload: str) -> str:
         signature = hmac.new(
@@ -41,7 +45,7 @@ class BingXApi:
 
         async with aiohttp.ClientSession() as session:
             async with session.request(method, url, headers=headers, json=payload) as response:
-                return await response.text()
+                return await response.json()
 
     def _parse_params(self, params_map: dict) -> str:
         sorted_keys = sorted(params_map)
