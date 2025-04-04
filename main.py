@@ -3,7 +3,7 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
-from app.api.exchanges.mexc.mexc_api import MexcApi
+from app.services.cex.mexc_api import MexcApi
 from aiogram.client.bot import DefaultBotProperties
 from app.bot.handlers import router
 from core.config import settings

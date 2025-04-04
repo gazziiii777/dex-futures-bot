@@ -7,7 +7,6 @@ from sqlalchemy import Result, and_, asc, delete, desc, func, select, update, or
 session = db_helper.get_scoped_session()
 
 
-
 async def test(session: AsyncSession):
+    print(session)
     quary = select(MEXC)
-    
