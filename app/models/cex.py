@@ -6,20 +6,22 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 class MEXC(Base):
     __tablename__ = "mexc"
 
-    name: str = Mapped[str]
-    sumbol: str = Mapped[str]
-    slug: str = Mapped[str]
-    chain: str = Mapped[str]
-    token_address: str = Mapped[str]
-    logo: str = Mapped[str]
-    signal: bool = Mapped[bool]
+    name: Mapped[str] = mapped_column()
+    sumbol: Mapped[str] = mapped_column()
+    slug: Mapped[str] = mapped_column()
+    chain: Mapped[str] = mapped_column()
+    token_address: Mapped[str] = mapped_column()
+    logo: Mapped[str] = mapped_column()
+    signal: Mapped[bool] = mapped_column()
 
 
 class BINGX(Base):
-    name: str = Mapped[str]
-    sumbol: str = Mapped[str]
-    slug: str = Mapped[str]
-    chain: str = Mapped[str]
-    token_address: str = Mapped[str]
-    logo: str = Mapped[str]
-    signal: bool = Mapped[bool]
+    __tablename__ = "bingx"
+    name: Mapped[str] = mapped_column()
+    sumbol: Mapped[str] = mapped_column()
+    slug: Mapped[str] = mapped_column()
+    chain: Mapped[str] = mapped_column()
+    token_address: Mapped[str] = mapped_column()
+    logo: Mapped[str] = mapped_column()
+    signal: Mapped[bool] = mapped_column()
+
