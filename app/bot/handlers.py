@@ -17,5 +17,5 @@ async def cmd_start(message: Message):
 async def parse(message: Message):
     zxc = await parse_crypto()
     print(zxc)
-    await message.answer(text='Вывод')
+    await message.answer(text=f"{zxc}")
     

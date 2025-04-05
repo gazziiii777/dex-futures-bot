@@ -1,8 +1,8 @@
-"""add all fields
+"""all_fields
 
-Revision ID: 80b26c5f972a
+Revision ID: a4deb3e966ca
 Revises: 
-Create Date: 2025-04-05 16:18:31.650197
+Create Date: 2025-04-05 19:19:05.360783
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '80b26c5f972a'
+revision: str = 'a4deb3e966ca'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -33,13 +33,13 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('mexc',
-    sa.Column('name', sa.String(), nullable=False),
-    sa.Column('sumbol', sa.String(), nullable=False),
-    sa.Column('slug', sa.String(), nullable=False),
-    sa.Column('chain', sa.String(), nullable=False),
-    sa.Column('token_address', sa.String(), nullable=False),
-    sa.Column('logo', sa.String(), nullable=False),
-    sa.Column('signal', sa.Boolean(), nullable=False),
+    sa.Column('name', sa.String(), nullable=True),
+    sa.Column('sumbol', sa.String(), nullable=True),
+    sa.Column('slug', sa.String(), nullable=True),
+    sa.Column('chain', sa.String(), nullable=True),
+    sa.Column('token_address', sa.String(), nullable=True),
+    sa.Column('logo', sa.String(), nullable=True),
+    sa.Column('signal', sa.Boolean(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
