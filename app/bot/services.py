@@ -34,13 +34,31 @@ async def is_coin_in_db(symbol: MEXCSymbol) -> bool:
         result = await session.execute(query)
         return result.scalar()  # Возвращает True или False
 
+async def is_signal(symbol: MEXCSymbol) -> bool:
+    """Проверяет, есть ли монета с указанным именем в базе данных."""
+    async with db_helper.scoped_session_dependency_context() as session:
+        # Используем exists() для эффективной проверки
+        query = select(MEXC).where(and_(MEXC.signal == True, MEXC.symbol == symbol))
+        result = await session.execute(query)
+        return result.scalar()  # Возвращает True или False
+
 
 async def insert_crypto_data(data: MEXCNewCoin) -> bool:
-    """Добавляем новую монетку в БД"""
+    """Добавляем новую монетку в БД, если она еще не существует"""
     async with db_helper.scoped_session_dependency_context() as session:
+        # Проверяем, существует ли уже монета с таким символом
+        existing_coin = await session.execute(
+            select(MEXC).where(MEXC.symbol == data.get('symbol'))
+        )
+        if existing_coin.scalar_one_or_none() is not None:
+            return False  # Монета уже существует
+
+        # Если монеты нет, добавляем новую
         stmt = insert(MEXC).values(data)
         await session.execute(stmt)
         await session.commit()
+        return True
+
 
 
 async def is_coin_signal(symbol: MEXCSymbol) -> bool:
@@ -55,31 +73,11 @@ async def is_coin_signal(symbol: MEXCSymbol) -> bool:
         return result.scalar()
 
 
-async def update_coin_signal(data: MEXCUpdateSignal) -> bool:
-    """
-    Обновляет сигнал для существующей монеты или создает новую запись.
-
-    Args:
-        symbol: Символ монеты (например, "BTCUSDT")
-        signal: Значение сигнала (True/False)
-
-    Returns:
-        bool: True если операция выполнена успешно, False при ошибке
-    """
+async def update_coin_signal(symbol: MEXCSymbol) -> bool:
     async with db_helper.scoped_session_dependency_context() as session:
-        # Проверяем существование монеты
-        query = select(MEXC).where(MEXC.symbol == data.symbol)
+        query = select(MEXC).where(MEXC.symbol == symbol)
         result = await session.execute(query)
         coin = result.scalar_one_or_none()
-
         if coin:
-            # Если монета существует - обновляем сигнал
-            coin.signal = data.signal
+            coin.signal = False
             await session.commit()
-            return True
-        else:
-            # Если монеты нет - создаем новую запись
-            new_coin = MEXC(symbol=data.symbol, signal=data.signal)
-            session.add(new_coin)
-            await session.commit()
-            return True

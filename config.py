@@ -1,3 +1,7 @@
+COINMARKETCAP_URL = "https://coinmarketcap.com/currencies/"
+MEXC_URL = "https://www.mexc.com/ru-RU/futures/"
+
+
 COINMARKETCAP_BASE_URL = "https://pro-api.coinmarketcap.com"
 DEXSCREENER_BASE_URL = "https://api.dexscreener.com"
 

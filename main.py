@@ -6,6 +6,7 @@ from aiogram import Bot, Dispatcher
 from app.services.oracles.coinmarketcap_api import CoinMarketCapApi
 from app.services.cex.mexc_api import MexcApi
 from app.services.cex.bingx_api import BingXApi
+from app.services.dex.dexscreener_api import DEXApi
 from aiogram.client.bot import DefaultBotProperties
 from app.bot.handlers import router
 from core.config import settings
@@ -25,12 +26,16 @@ async def on_startup():
     # b = await a.get_cryptocurrency_info("TAT")
     # print(b)
     # a = MexcApi()
-    # b = await a.get_all_futures_coin()
+    # b = await a.get_currency_info('GUN')
+    # print(b)
     # for i in b:
     #     print(i)
     # a = BingXApi()
     # b = await a.get_all_futures_coin()
     # print(len(b))
+    # a=DEXApi()
+    # b = await a.get_token_price('avalanche', '0x26deBD39D5eD069770406FCa10A0E4f8d2c743eB')
+    # print(b)
 
 
 async def on_shutdown():

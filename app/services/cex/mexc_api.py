@@ -19,5 +19,6 @@ class MexcApi:
         available_coins = await utils.all_futures_coins(detail.get('data'))
         return available_coins
 
-    def get_currency_info(self):
-        return self.spot_client.get_currency_info()
+    async def get_token_price(self, symbol):
+        detail = self.futures_client.get_depth(symbol+'_USDT')
+        return detail.get('data').get('asks')[0][0]

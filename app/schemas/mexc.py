@@ -3,13 +3,13 @@ from datetime import datetime
 from typing import Optional
 
 class MEXCNewCoin(BaseModel):  
-    name: Optional[str]
+    name: Optional[str] = None
     symbol: Optional[str]
-    slug: Optional[str] 
-    chain: Optional[str]
-    token_address: Optional[str] 
-    logo: Optional[str] 
-    signal: Optional[bool] 
+    slug: Optional[str] = None
+    chain: Optional[str] = None
+    token_address: Optional[str] = None
+    logo: Optional[str] = None
+    signal: Optional[bool] = None
     
 class MEXCSymbol(BaseModel):  
     symbol: Optional[str]
