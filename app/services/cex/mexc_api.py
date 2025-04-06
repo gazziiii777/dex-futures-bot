@@ -14,7 +14,7 @@ class MexcApi:
         self.spot_client = spot.HTTP(
             api_key=self.api_key, api_secret=self.secret_key)
 
-    async def get_all_futures_coin(self) -> dict:
+    async def get_all_futures_coin(self) -> list[dict]:
         detail = self.futures_client.detail()
         available_coins = await utils.all_futures_coins(detail.get('data'))
         return available_coins

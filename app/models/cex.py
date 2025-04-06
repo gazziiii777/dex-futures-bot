@@ -7,7 +7,7 @@ class MEXC(Base):
     __tablename__ = "mexc"
 
     name: Mapped[str] = mapped_column(nullable=True)
-    sumbol: Mapped[str] = mapped_column(nullable=True)
+    symbol: Mapped[str] = mapped_column(nullable=True)
     slug: Mapped[str] = mapped_column(nullable=True)
     chain: Mapped[str] = mapped_column(nullable=True)
     token_address: Mapped[str] = mapped_column(nullable=True)
@@ -19,7 +19,7 @@ class BINGX(Base):
     __tablename__ = "bingx"
     
     name: Mapped[str] = mapped_column()
-    sumbol: Mapped[str] = mapped_column()
+    symbol: Mapped[str] = mapped_column()
     slug: Mapped[str] = mapped_column()
     chain: Mapped[str] = mapped_column()
     token_address: Mapped[str] = mapped_column()

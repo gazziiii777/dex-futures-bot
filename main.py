@@ -28,9 +28,9 @@ async def on_startup():
     # b = await a.get_all_futures_coin()
     # for i in b:
     #     print(i)
-    a = BingXApi()
-    b = await a.get_all_futures_coin()
-    print(len(b))
+    # a = BingXApi()
+    # b = await a.get_all_futures_coin()
+    # print(len(b))
 
 
 async def on_shutdown():
