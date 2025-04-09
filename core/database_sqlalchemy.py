@@ -12,7 +12,7 @@ class DataSperm:
         self.engine = create_async_engine(
             url=settings.DATABASE_URL_asyncpg,
             pool_size=100,
-            echo=True,
+            echo=False,
             max_overflow=50)
 
         self.session_factory = async_sessionmaker(
