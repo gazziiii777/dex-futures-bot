@@ -1,7 +1,7 @@
 from aiogram import Router, F, types
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
-from app.bot.services import is_coin_in_db, is_signal, update_coin_signal, insert_crypto_data
+from app.bot.services import is_coin_in_db, is_signal, update_coin_signal, insert_crypto_data, get_mexc_with_signal
 from app.services.cex.mexc_api import MexcApi
 from app.services.oracles.coinmarketcap_api import CoinMarketCapApi
 from app.services.dex.dexscreener_api import DEXApi
@@ -43,7 +43,41 @@ async def parse(message: Message):
     for coin_from_mexc in all_coins_from_mexc:
         symbol = coin_from_mexc.get('symbol')
         if await is_coin_in_db(symbol):
-            pass
+            coin_object = await get_mexc_with_signal(symbol)
+            if coin_object:
+                for chain in coin_object.chains:
+                    try:
+                        price_and_info_dex, price_mexc = await DEXApi().get_token_price_and_info(chain.chain, chain.token_address), await MexcApi().get_token_price(symbol=symbol)
+                        if price_mexc is not None and price_and_info_dex is not None:
+                            price_dex = float(
+                                price_and_info_dex.get('priceUsd'))
+                            diff_percent = abs(price_mexc - price_dex) / min(
+                                price_mexc, price_dex) * 100
+
+                            if diff_percent >= 2:
+                                if price_mexc > price_dex:
+                                    message_text = (f"Цена на MEXC больше на {diff_percent:.2f}%\n"
+                                                    f"Price MEXC: {price_mexc}\n"
+                                                    f"Price DEX: {price_dex}\n\n"
+                                                    f"Coin: {symbol}\n"
+                                                    f"Chain: {chain.chain}\n"
+                                                    f"Address: {coin_object.token_address}")
+                                else:
+                                    message_text = (f"Цена на DEX больше на {diff_percent:.2f}%\n"
+                                                    f"Price DEX: {price_dex}\n"
+                                                    f"Price MEXC: {price_mexc}\n\n"
+                                                    f"Coin: {symbol}\n"
+                                                    f"Chain: {chain.chain}\n"
+                                                    f"Address: {coin_object.token_address}")
+
+                                await message.answer(text=message_text)
+                        # else:
+                        #     print("❌ Cant parse price")
+                    except Exception as e:
+                        logger.error(
+                            f"Ошибка: {e} при получнии цены. coin_object: {coin_object}, dex: {price_and_info_dex}, mexc: {price_mexc}")
+                        # await update_coin_signal(symbol=symbol)
+                        # await message.answer(text=f"Coin with symbol - {symbol}, chain = {coin_object.chain}, token_address = {coin_object.token_address} was deleted - {e}")
         else:
             coin_info_cmc = await CoinMarketCapApi().get_cryptocurrency_info(symbol)
             if type(coin_info_cmc) == dict:

@@ -5,10 +5,9 @@ async def filter_and_find_max_volume(data: dict) -> dict:
             filtered_items.append({
                 'priceUsd': item['priceUsd'],
                 'url': item['url'],
-                'dexId': item['dexId'],
+                'dexId': item['dexId'],  # где он трейдится
                 'volume_h24': item['volume']['h24']
             })
-        
 
     if not filtered_items:
         return None

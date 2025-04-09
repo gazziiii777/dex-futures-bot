@@ -12,7 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import Result, and_, asc, delete, desc, func, select, update, or_
 from sqlalchemy import exists, insert
 from app.schemas.mexc import MEXCNewCoin, MEXCSymbol, MEXCUpdateSignal
-
+from sqlalchemy.orm import selectinload
 from logging_config import setup_logger
 
 logger = setup_logger('services')
@@ -39,14 +39,25 @@ async def is_coin_in_db(symbol: MEXCSymbol) -> bool:
         return result.scalar()  # Возвращает True или False
 
 
-async def is_signal(symbol: MEXCSymbol) -> bool:
+async def get_mexc_with_signal(symbol: MEXCSymbol):
+    """Возвращает монету с включённым сигналом и цепочками, если она есть."""
+    async with db_helper.scoped_session_dependency_context() as session:
+        result = await session.execute(
+            select(MEXC)
+            .options(selectinload(MEXC.chains))
+            .where(and_(MEXC.signal == True, MEXC.symbol == symbol))
+        )
+        return result.scalar_one_or_none()
+
+
+async def is_signal(symbol: MEXCSymbol):
     """Проверяет, есть ли монета с указанным именем в базе данных."""
     async with db_helper.scoped_session_dependency_context() as session:
         # Используем exists() для эффективной проверки
         query = select(MEXC).where(
             and_(MEXC.signal == True, MEXC.symbol == symbol))
         result = await session.execute(query)
-        return result.scalar()  # Возвращает True или False
+        return result.scalar()  
 
 
 async def insert_crypto_data(data: dict) -> bool:
